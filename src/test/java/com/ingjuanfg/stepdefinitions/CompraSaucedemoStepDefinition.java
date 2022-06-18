@@ -6,17 +6,18 @@ import com.ingjuanfg.pages.YourCartPage;
 import com.ingjuanfg.pages.CheckoutPage;
 import com.ingjuanfg.pages.OverviewPage;
 import com.ingjuanfg.pages.CompletePage;
+import com.ingjuanfg.steps.LoginStep;
+import com.ingjuanfg.steps.ProductsStep;
 import cucumber.api.java.es.Cuando;
 import cucumber.api.java.es.Dado;
 import cucumber.api.java.es.Entonces;
+import net.thucydides.core.annotations.Steps;
 import org.fluentlenium.core.annotation.Page;
+
+import java.util.Map;
 
 public class CompraSaucedemoStepDefinition {
 
-    @Page
-    private LoginPage loginPage;
-    @Page
-    private ProductsPage productsPage;
     @Page
     private YourCartPage yourCartPage;
     @Page
@@ -26,32 +27,34 @@ public class CompraSaucedemoStepDefinition {
     @Page
     private CompletePage completePage;
 
+    @Steps
+    LoginStep loginStep;
+    @Steps
+    ProductsStep productsStep;
 
     @Dado("que el usuario se encuentra en la pagina")
     public void queElUsuarioSeEncuentraEnLaPagina() {
-        loginPage.open();
+        loginStep.abrirNavegador();
     }
 
     @Cuando("el usuario ingrese sus credenciales")
-    public void elUsuarioIngreseSusCredenciales() {
-        loginPage.escribirUsuario("standard_user");
-        loginPage.escribirPassword("secret_sauce");
-        loginPage.clickLogin();
+    public void elUsuarioIngreseSusCredenciales(Map<String, String> credenciales) {
+        loginStep.realizarAuntenticacion(credenciales);
     }
 
     @Entonces("el usuario deberia ingresar al ecommerce")
     public void elUsuarioDeberiaIngresarAlEcommerce() {
-        productsPage.validarLogin();
+        productsStep.validarLoginCorrecto();
     }
 
-    @Dado("que el usuario agrega un producto al carrito")
-    public void elUsuarioAgregaUnProductoAlCarrito() {
-        productsPage.adicionarAlCarrito();
+    @Dado("que el usuario agrega el producto (.*) al carrito")
+    public void elUsuarioAgregaElProductoAlCarrito(String producto) {
+        productsStep.agregarProductoAlCarrito(producto);
     }
 
     @Cuando("se dirige al carrito de compras para iniciar el checkout")
     public void seDirigeAlCarritoDeComprasParaIniciarElCheckout() {
-        productsPage.irAlCarrito();
+        productsStep.irHaciaElCarrito();
         yourCartPage.darClickEnCheckout();
     }
 
@@ -64,8 +67,8 @@ public class CompraSaucedemoStepDefinition {
         overviewPage.darClickEnFinalizar();
     }
 
-    @Entonces("el usuario debería ver el mensaje de gracias por su orden")
-    public void elUsuarioDeberíaVerElMensajeDeGraciasPorSuOrden() {
+    @Entonces("el usuario deberia ver el mensaje de gracias por su orden")
+    public void elUsuarioDeberiaVerElMensajeDeGraciasPorSuOrden() {
         completePage.validarFinalizacionDeLaOrden();
     }
 }

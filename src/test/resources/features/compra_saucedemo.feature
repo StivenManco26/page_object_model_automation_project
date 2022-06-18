@@ -14,4 +14,4 @@
       Dado que el usuario agrega un producto al carrito
       Cuando se dirige al carrito de compras para iniciar el checkout
       Y ingresa sus datos para finalizar la compra
-      Entonces el usuario debería ver el mensaje de gracias por su orden
+      Entonces el usuario deberia ver el mensaje de gracias por su orden

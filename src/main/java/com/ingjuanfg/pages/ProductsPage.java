@@ -1,30 +1,30 @@
 package com.ingjuanfg.pages;
 
+import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.pages.PageObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class ProductsPage extends PageObject {
-    WebDriver driver;
-    By labelProducts = By.xpath("//span[@class='title']");
-    By buttonAddToCart = By.id("add-to-cart-sauce-labs-backpack");
-    By buttonShoppingCar = By.id("shopping_cart_container");
+    @FindBy(xpath="//span[@class='title']")
+    WebElementFacade labelProducts;
+    @FindBy(id="shopping_cart_container")
+    WebElementFacade buttonShoppingCar;
+    @FindBy(xpath="//div[contains(.,'Sauce Labs Backpack') and @class='inventory_item_label']/following-sibling::div//button")
+    WebElementFacade productoAgregar;
 
-    public ProductsPage(WebDriver driver) {
-        this.driver = driver;
-    }
+
     public void validarLogin(){
-        assertThat("el texto del título es vacio", driver.findElement(labelProducts).getText(), is("PRODUCTS"));
+        assertThat("el texto del titulo es vacio", labelProducts.getText(), is("PRODUCTS"));
     }
 
-    public void adicionarAlCarrito(){
-        driver.findElement(buttonAddToCart).click();
+    public void adicionarAlCarrito(String producto){
+        productoAgregar.click();
     }
 
     public void irAlCarrito(){
-        driver.findElement(buttonShoppingCar).click();
+        buttonShoppingCar.click();
     }
 }
