@@ -17,8 +17,7 @@ public class ProductsPage extends PageObject {
         this.driver = driver;
     }
     public void validarLogin(){
-        driver.findElement(labelProducts).isDisplayed();
-        assertThat(driver.findElement(labelProducts).getText(), is("PRODUCTS"));
+        assertThat("el texto del título es vacio", driver.findElement(labelProducts).getText(), is("PRODUCTS"));
     }
 
     public void adicionarAlCarrito(){

@@ -15,10 +15,15 @@ public class CompraSaucedemoStepDefinition {
 
     @Page
     private LoginPage loginPage;
+    @Page
     private ProductsPage productsPage;
+    @Page
     private YourCartPage yourCartPage;
+    @Page
     private CheckoutPage checkoutPage;
+    @Page
     private OverviewPage overviewPage;
+    @Page
     private CompletePage completePage;
 
 
